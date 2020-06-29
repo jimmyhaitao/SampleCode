@@ -20,9 +20,9 @@ function logResponseBody(response, body) {
 	console.log("Body: "+ JSON.stringify(JSON.parse(body),null,4));
 }
 
-function getBasicAuthHeader(userId, password) {
-	return 'Basic ' + new Buffer(userId + ':' + password).toString('base64');
-}
+// function getBasicAuthHeader(userId, password) {
+// 	return 'Basic ' + new Buffer(userId + ':' + password).toString('base64');
+// }
 
 function VisaAPIClient() {
 	
@@ -30,10 +30,10 @@ function VisaAPIClient() {
 
 VisaAPIClient.prototype.doMutualAuthRequest = function(path, requestBody, methodType, headers, callback) {
 	
-	var userId = config.userId ;
-	var password = config.password;
-	var keyFile = config.key;
-	var certificateFile = config.cert;
+	// var userId = config.userId ;
+	// var password = config.password;
+	// var keyFile = config.key;
+	// var certificateFile = config.cert;
 	logRequest(requestBody, path);
 	
 	if (methodType === 'POST' || methodType === 'PUT') {
@@ -41,13 +41,13 @@ VisaAPIClient.prototype.doMutualAuthRequest = function(path, requestBody, method
 	}
 
 	headers['Accept'] = 'application/json';
-	headers['Authorization'] = getBasicAuthHeader(userId, password);
+	// headers['Authorization'] = getBasicAuthHeader(userId, password);
 	headers['x-correlation-id'] = randomstring.generate({length:12, charset: 'alphanumeric'}) + '_SC'
 	request({
 		uri : config.visaUrl + path,
-		key: fs.readFileSync(keyFile),
+		// key: fs.readFileSync(keyFile),
 		method : methodType,
-		cert: fs.readFileSync(certificateFile),
+		// cert: fs.readFileSync(certificateFile),
 		headers: headers,
 		body: requestBody,
 		timeout: 30000
